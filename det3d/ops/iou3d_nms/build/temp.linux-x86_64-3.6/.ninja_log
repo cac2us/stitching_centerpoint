@@ -1,5 +1,0 @@
-# ninja log v5
-0	1368	1677814990365175528	/mnt/sdb1/CenterPoint/det3d/ops/iou3d_nms/build/temp.linux-x86_64-3.6/src/iou3d_nms_kernel.o	1d3f8eddde45a944
-0	10139	1677814999133220887	/mnt/sdb1/CenterPoint/det3d/ops/iou3d_nms/build/temp.linux-x86_64-3.6/src/iou3d_cpu.o	67ce0bb63c55bb9
-0	10414	1677814999409222315	/mnt/sdb1/CenterPoint/det3d/ops/iou3d_nms/build/temp.linux-x86_64-3.6/src/iou3d_nms.o	9858a90731a44030
-0	14566	1677815003557243780	/mnt/sdb1/CenterPoint/det3d/ops/iou3d_nms/build/temp.linux-x86_64-3.6/src/iou3d_nms_api.o	52e76858f16847eb

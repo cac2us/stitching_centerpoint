@@ -7,6 +7,7 @@ from typing import List
 
 from tqdm import tqdm
 from pyquaternion import Quaternion
+from det3d.datasets.stitch import stitch_splits
 
 try:
     from nuscenes import NuScenes
@@ -568,8 +569,6 @@ def create_stitch_infos(root_path, version="v0.4-stitch", nsweeps=1, filter_zero
     assert version in available_vers
     if version == "v1.0-trainval":
         train_scenes = splits.train
-        # random.shuffle(train_scenes)
-        # train_scenes = train_scenes[:int(len(train_scenes)*0.2)]
         val_scenes = splits.val
     elif version == "v1.0-test":
         train_scenes = splits.test
@@ -578,8 +577,8 @@ def create_stitch_infos(root_path, version="v0.4-stitch", nsweeps=1, filter_zero
         train_scenes = splits.mini_train
         val_scenes = splits.mini_val
     elif version == "v0.5-stitch" or version == 'v0.7-stitch':
-        train_scenes = splits.train
-        val_scenes = splits.val
+        train_scenes = stitch_splits.train
+        val_scenes = stitch_splits.val
     else:
         raise ValueError("unknown")
     test = "test" in version

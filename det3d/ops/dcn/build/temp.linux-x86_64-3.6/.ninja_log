@@ -1,3 +1,0 @@
-# ninja log v5
-0	9436	1677815083549658525	/mnt/sdb1/CenterPoint/det3d/ops/dcn/build/temp.linux-x86_64-3.6/src/deform_conv_cuda_kernel.o	270e8b37f2e9d03a
-2	9660	1677838393382945149	/mnt/sdb1/CenterPoint/det3d/ops/dcn/build/temp.linux-x86_64-3.6/src/deform_conv_cuda_kernel.o	270e8b37f2e9d03a

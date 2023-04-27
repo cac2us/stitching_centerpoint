@@ -1,5 +1,8 @@
 data/
 work_dirs/
+build/
+__pycache__/
+/__pycache__/
 
 AB3DMOT/
 aa/
@@ -10,6 +13,9 @@ DEMO/
 *.pth
 *.npy
 *.pcd
+*.pyc
+*.so
+*.o
 
 pc_range.py
 shuffle.py
