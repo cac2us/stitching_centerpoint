@@ -1,0 +1,16 @@
+data/
+work_dirs/
+
+AB3DMOT/
+aa/
+tracking_json/
+val/
+DEMO/
+
+*.pth
+*.npy
+*.pcd
+
+pc_range.py
+shuffle.py
+train.sh
