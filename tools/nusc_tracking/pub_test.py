@@ -18,6 +18,7 @@ from nuscenes import NuScenes
 import json 
 import time
 from nuscenes.utils import splits
+from det3d.datasets.stitch import stitch_splits
 
 def parse_args():
     parser = argparse.ArgumentParser(description="Tracking Evaluation")
@@ -41,7 +42,7 @@ def save_first_frame():
     if args.version == 'v1.0-trainval':
         scenes = splits.val
     if args.version == 'v0.4-stitch':
-        scenes = splits.val_track
+        scenes = stitch_splits.val_track
     elif args.version == 'v1.0-test':
         scenes = splits.test 
     else:
