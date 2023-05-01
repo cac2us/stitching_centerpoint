@@ -1,135 +1,91 @@
-# Center-based 3D Object Detection and Tracking
+# [스티칭] 한양대 물체검출 모델 세팅
 
-3D Object Detection and Tracking using center points in the bird-eye view.
+## 환경세팅
 
-<p align="center"> <img src='docs/teaser.png' align="center" height="230px"> </p>
+**Requirements**
 
-> [**Center-based 3D Object Detection and Tracking**](https://arxiv.org/abs/2006.11275),            
-> Tianwei Yin, Xingyi Zhou, Philipp Kr&auml;henb&uuml;hl,        
-> *arXiv technical report ([arXiv 2006.11275](https://arxiv.org/abs/2006.11275))*  
+- Python 3.6+ (python 3.6.9)
+- Pytorch 1.1 or higher (1.8.1)
+- CUDA 10.0 or higher (11.1)
+- spconv
 
+괄호 안은 도커에 설치되어있는 환경 버전
 
+```bash
+docker pull yckimm/stitching:v1.1 # (도커 공유)
+```
 
-    @article{yin2021center,
-      title={Center-based 3D Object Detection and Tracking},
-      author={Yin, Tianwei and Zhou, Xingyi and Kr{\"a}henb{\"u}hl, Philipp},
-      journal={CVPR},
-      year={2021},
-    }
+## 디렉토리 세팅
 
+HDD로 전달받은 파일 중 필요한 파일만 저장시키기 위해 기존 데이터 폴더에서 생성한 samples폴더로 옮기는 작업을 수행
 
-## NEWS
+**폴더 구조**
 
-[2021-12-27] We release a multimodal fusion approach for 3D detection [MVP](https://github.com/tianweiy/MVP). 
+gen_stitch_data_format_lidar.py, gen_stitch_data_format_cam_radar.py, gen_stitch_data_to_folder.py, gen_stitch_data_rot_15.py를 stitch 데이터 폴더 안에 넣고 실행
 
-[2021-12-27] A TensorRT implementation (by [Wang Hao](https://github.com/Abraham423)) of CenterPoint-PointPillar is available at [URL](https://github.com/Abraham423/CenterPointTensorRT). ~60 FPS on Waymo Open Dataset. There is also a nice onnx conversion [repo](https://github.com/CarkusL/CenterPoint) by [CarkusL](https://github.com/CarkusL).   
+```bash
+stitch
+|— data # 기존 데이터 폴더
+|    |— pole_1
+|    |— pole_2
+|— annotation # 전달받은 annotation 파일
+|    |— keyframe_lidar
+|    |— scene_001
+|— **gen_stitch_data_format_lidar.py (파일첨부)**
+|— **gen_stitch_data_format_cam_radar.py (파일첨부)**
+|— **gen_stitch_data_to_folder.py (파일첨부)**
+|— **gen_stitch_data_rot_15.py (파일첨부)**
+|— annotated_data # 코드로 자동생성
+|— annotated_data_rot15 # 코드로 자동생성
+|— samples # 코드로 자동생성
+```
 
-[2021-06-20] The real time version of CenterPoint ranked 2nd in the Waymo Real-time 3D detection challenge (72.8 mAPH / 57.1 ms). The corresponding techical report is available at [URL](https://drive.google.com/file/d/1wG1zPc2PyWgBIC-dLSFbxzeZ3FhA708_/view). Code is at [URL](https://github.com/tianweiy/CenterPoint/tree/new_release)
+**실행해야할 명령어**
 
-[2021-04-13] Better nuScenes results by fixing sync-bn bug and using stronger augmentations. Plese refer to [nuScenes](configs/nusc/README.md).  
+```bash
+python3 gen_stitch_data_format_lidar.py # (라이다 데이터에 대해 생성)
+python3 gen_stitch_data_format_cam_radar.py # (카메라, 레이더 데이터에 대해 생성)
+python3 gen_stitch_data_rot_15.py # (keyframe을 scene으로 변환, pcd 15도 회전)
+python3 gen_stitch_data_to_folder.py # (samples 폴더로 필요한 pcd 파일 옮겨줌)
+```
 
-[2021-02-28] CenterPoint is accepted at CVPR 2021 :fire:
+실행 시 annotated_data 폴더에 물체검출모델 training 및 inference를 위한 파일이 저장되게 됨
 
-[2021-01-06] CenterPoint v0.1 is released. Without bells and whistles, we rank first among all Lidar-only methods on Waymo Open Dataset with a single model. Check out CenterPoint's model zoo for [Waymo](configs/waymo/README.md) and [nuScenes](configs/nusc/README.md). 
+## 프로젝트 세팅
 
-## Contact
-Any questions or suggestions are welcome! 
+**코드 다운 및 폴더 세팅**
 
-Tianwei Yin [tianweiy@mit.edu](mailto:tianweiy@mit.edu) 
-Xingyi Zhou [zhouxy@cs.utexas.edu](mailto:zhouxy@cs.utexas.edu)
+```bash
+git clone https://github.com/rasd3/stitching_centerpoint.git
+cd stitching_centerpoint
+bash setup.sh
+mkdir data && mkdir data/stitch
+```
 
-## Abstract
-Three-dimensional objects are commonly represented as 3D boxes in a point-cloud. This representation mimics the well-studied image-based 2D bounding-box detection but comes with additional challenges. Objects in a 3D world do not follow any particular orientation, and box-based detectors have difficulties enumerating all orientations or fitting an axis-aligned bounding box to rotated objects. In this paper, we instead propose to represent, detect, and track 3D objects as points. Our framework, CenterPoint, first detects centers of objects using a keypoint detector and regresses to other attributes, including 3D size, 3D orientation, and velocity. In a second stage, it refines these estimates using additional point features on the object. In CenterPoint, 3D object tracking simplifies to greedy closest-point matching. The resulting detection and tracking algorithm is simple, efficient, and effective. CenterPoint achieved state-of-the-art performance on the nuScenes benchmark for both 3D detection and tracking, with 65.5 NDS and 63.8 AMOTA for a single model. On the Waymo Open Dataset, CenterPoint outperforms all previous single model method by a large margin and ranks first among all Lidar-only submissions.
+**데이터셋 구조 세팅**
 
+```bash
+# For nuScenes Dataset         
+└── stitching_centerpoint/data/stitch/
+       ├── samples       <-- (ln -s stitch/samples ./)
+       ├── v0.5-stitch   <-- metadata (파일첨부)
+       ├── maps          <-- (파일첨부)
+```
 
-# Highlights
+samples는 디렉토리 세팅 단계에서 제작한 samples를 심볼링 링크로 가져와서 사용, 동봉한 
+v0.5-stitch 압축파일을 해당 위치에 복사
 
-- **Simple:** Two sentences method summary: We use standard 3D point cloud encoder with a few convolutional layers in the head to produce a bird-eye-view heatmap and other dense regression outputs including the offset to centers in the previous frame. Detection is a simple local peak extraction with refinement, and tracking is a closest-distance matching.
+**Create data**
 
-- **Fast and Accurate**: Our best single model achieves *71.9* mAPH on Waymo and *65.5* NDS on nuScenes while running at 11FPS+. 
+```bash
+# stitching_centerpoint/
+python tools/create_data.py stitch_data_prep ./data/stitch v0.5-stitch
+```
 
-- **Extensible**: Simple replacement for anchor-based detector in your novel algorithms.
+**Inference**
 
-## Main results
+```bash
+python tools/dist_test.py ./configs/nusc/voxelnet/stitch/stitch_centerpoint_voxelnet_01voxel.py --work_dir ./work_dir/test --checkpoint ./stitching_centerpoint_test.pth
+```
 
-#### 3D detection on Waymo test set
-
-|         |  #Frame | Veh_L2 | Ped_L2 | Cyc_L2  | MAPH   |  FPS  |
-|---------|---------|--------|--------|---------|--------|-------|
-|VoxelNet | 1       |  71.9     |  67.0      |  68.2       |   69.0     |   13    | 
-|VoxelNet | 2       |  73.0     |  71.5      |  71.3       |   71.9     |  11     |
-
-#### 3D detection on Waymo domain adaptation test set
-
-|         |  #Frame | Veh_L2 | Ped_L2 | Cyc_L2  | MAPH   |  FPS  |
-|---------|---------|--------|--------|---------|--------|-------|
-|VoxelNet | 2       |  56.1     |  47.8      |  65.2      |   56.3     |  11   |
-
-
-#### 3D detection on nuScenes test set 
-
-|         |  MAP ↑  | NDS ↑  | PKL ↓  | FPS ↑|
-|---------|---------|--------|--------|------|
-|VoxelNet |  58.0   | 65.5   | 0.69   | 11 |    
-
-
-#### 3D tracking on Waymo test set 
-
-|         |  #Frame | Veh_L2 | Ped_L2 | Cyc_L2  | MOTA   |  FPS  |
-|---------|---------|--------|--------|---------|--------|-------|
-| VoxelNet| 2       |   59.4     |  56.6      |   60.0      | 58.7       |  11    | 
-
-
-#### 3D Tracking on nuScenes test set 
-
-|          | AMOTA ↑ | AMOTP ↓ |
-|----------|---------|---------|
-| VoxelNet (flip test) |   63.8      |  0.555       |       
-
-
-All results are tested on a Titan RTX GPU with batch size 1.
-
-## Third-party resources
-
-- [ONCE_Benchmark](https://github.com/PointsCoder/ONCE_Benchmark): Implementation of CenterPoint on the ONCE dataset 
-- [CenterPoint-KITTI](https://github.com/tianweiy/CenterPoint-KITTI): Reimplementation of CenterPoint on the KITTI dataset 
-- [OpenPCDet](https://github.com/open-mmlab/OpenPCDet): Implementation of CenterPoint in OpenPCDet framework (with configs for Waymo/nuScenes dataset)
-- [AFDet](https://arxiv.org/abs/2006.12671): another work inspired by CenterNet achieves good performance on KITTI/Waymo dataset
-- [mmdetection3d](https://github.com/open-mmlab/mmdetection3d/tree/master/configs/centerpoint): CenterPoint in mmdet framework
-- [CenterPointTensorRT](https://github.com/Abraham423/CenterPointTensorRT): CenterPoint-PointPillar for accelerated inference with TensorRT 
-- [CenterPoint-ONNX](https://github.com/CarkusL/CenterPoint): Convert CenterPoint-Pillar to ONNX / TensorRT
-
-## Use CenterPoint
-
-### Installation
-
-Please refer to [INSTALL](docs/INSTALL.md) to set up libraries needed for distributed training and sparse convolution.
-
-### Benchmark Evaluation and Training 
-
-Please refer to [GETTING_START](docs/GETTING_START.md) to prepare the data. Then follow the instruction there to reproduce our detection and tracking results. All detection configurations are included in [configs](configs).
-
-### Develop
-
-If you are interested in training CenterPoint on a new dataset, use CenterPoint in a new task, or use a new network architecture for CenterPoint, please refer to [DEVELOP](docs/DEVELOP.md). Feel free to send us an email for discussions or suggestions. 
-
-### ToDo List
-- [ ] Support visualization with Open3D  
-- [ ] Colab demo 
-- [ ] Docker   
-
-## License
-
-CenterPoint is release under MIT license (see [LICENSE](LICENSE)). It is developed based on a forked version of [det3d](https://github.com/poodarchu/Det3D/tree/56402d4761a5b73acd23080f537599b0888cce07). We also incorperate a large amount of code from [CenterNet](https://github.com/xingyizhou/CenterNet)
-and [CenterTrack](https://github.com/xingyizhou/CenterTrack). See the [NOTICE](docs/NOTICE) for details. Note that both nuScenes and Waymo datasets are under non-commercial licenses. 
-
-## Acknowlegement
-This project is not possible without multiple great opensourced codebases. We list some notable examples below.  
-
-* [det3d](https://github.com/poodarchu/det3d)
-* [second.pytorch](https://github.com/traveller59/second.pytorch)
-* [CenterTrack](https://github.com/xingyizhou/CenterTrack)
-* [CenterNet](https://github.com/xingyizhou/CenterNet) 
-* [mmcv](https://github.com/open-mmlab/mmcv)
-* [mmdetection](https://github.com/open-mmlab/mmdetection)
-* [OpenPCDet](https://github.com/open-mmlab/OpenPCDet)
+det3d/models/detectors/voxelnet.py L90: if False → True로 바꿔서 visualize 가능

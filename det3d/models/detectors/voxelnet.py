@@ -87,7 +87,7 @@ class VoxelNet(SingleStageDetector):
             return self.bbox_head.loss(example, preds, self.test_cfg)
         else:
             abc = self.bbox_head.predict(example, preds, self.test_cfg)
-            if True:
+            if False:
                 global IDX
                 import cv2
                 b_size = len(example['points'])
@@ -95,8 +95,9 @@ class VoxelNet(SingleStageDetector):
                     points = example['points'][idx].detach().cpu().numpy()
                     gt_boxes = abc[idx]['box3d_lidar'][:, [0, 1, 2, 3, 4, 5, -1]].cpu().detach().numpy()
                     bev_map = nuscene_vis(points, gt_boxes)
-                    cv2.imwrite('val/test_%02d.png' % IDX, bev_map)
+                    cv2.imwrite('test_%02d.png' % IDX, bev_map)
                     IDX += 1
+                import pdb; pdb.set_trace()
             return abc
 
     def forward_two_stage(self, example, return_loss=True, **kwargs):

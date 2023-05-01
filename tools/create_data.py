@@ -11,7 +11,7 @@ from det3d.datasets.waymo import waymo_common as waymo_ds
 
 def stitch_data_prep(root_path, version, nsweeps=1, filter_zero=True, virtual=False):
     st_ds.create_stitch_infos(root_path, version=version, nsweeps=nsweeps, filter_zero=filter_zero)
-    if version == 'v0.5-stitch':
+    if version == 'v0.5-stitch' and False:
         create_groundtruth_database(
             "ST",
             root_path,
