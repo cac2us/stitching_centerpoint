@@ -445,6 +445,17 @@ class CenterHead(nn.Module):
             ret['metadata'] = metas[0][i]
             ret_list.append(ret)
 
+        # for class agnostic nms
+        for i in range(num_samples):
+            selected = box_torch_ops.rotate_nms_pcdet(ret_list[i]['box3d_lidar'],
+                                                      ret_list[i]['scores'],
+                                                      thresh=test_cfg.nms.nms_iou_threshold,
+                                                      pre_maxsize=test_cfg.nms.nms_pre_max_size,
+                                                      post_max_size=test_cfg.nms.nms_post_max_size)
+            ret_list[i]['box3d_lidar'] = ret_list[i]['box3d_lidar'][selected]
+            ret_list[i]['scores'] = ret_list[i]['scores'][selected]
+            ret_list[i]['label_preds'] = ret_list[i]['label_preds'][selected]
+
         return ret_list 
 
     @torch.no_grad()

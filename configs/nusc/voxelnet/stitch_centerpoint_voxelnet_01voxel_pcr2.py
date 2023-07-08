@@ -24,10 +24,10 @@ model = dict(
     pretrained=None,
     reader=dict(
         type="VoxelFeatureExtractorV3",
-        num_input_features=4,
+        num_input_features=3,
     ),
     backbone=dict(
-        type="SpMiddleResNetFHD", num_input_features=4, ds_factor=8
+        type="SpMiddleResNetFHD", num_input_features=3, ds_factor=8
     ),
     neck=dict(
         type="RPN",
