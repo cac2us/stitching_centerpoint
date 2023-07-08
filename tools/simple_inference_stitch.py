@@ -130,7 +130,6 @@ if __name__ == '__main__':
         "--checkpoint", help="the path to checkpoint which the model read from", default=None, type=str
     )
     parser.add_argument('--input_data_dir', type=str, required=True)
-    parser.add_argument('--output_dir', type=str, required=True)
     parser.add_argument('--fp16', action='store_true')
     parser.add_argument('--threshold', default=0.5)
     parser.add_argument('--visual', action='store_true')
