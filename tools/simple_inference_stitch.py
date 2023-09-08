@@ -14,7 +14,15 @@ import argparse
 import torch
 import time 
 import os 
+import json
 
+STITCH_TRACKING_NAMES = [
+    'car',
+    'truck',
+    'bus',
+    'motorcycle',
+    'pedestrian',
+]
 voxel_generator = None 
 model = None 
 device = None 
@@ -122,6 +130,45 @@ def load_points_stitch(pcd_path):
 
     return points
 
+def save_pred(pred):
+    dets = [v for _, v in pred.items()]
+    det_name = [i for i, _ in pred.items()]
+    
+    nusc_annos = {
+            "results": {},
+            "meta": None,
+        }
+    for k, det in enumerate(dets):
+        annos = []
+        boxes = det['boxes']
+        name = det_name[k]
+        for i, box in enumerate(boxes):
+            nusc_anno = {
+                    "sample_token": name,
+                    "translation": box[:3].tolist(),
+                    "size": box[3:6].tolist(),
+                    "rotation": box[-1:].tolist(),
+                    "velocity": box[6:8].tolist(),
+                    "detection_name": STITCH_TRACKING_NAMES[det['classes'][i]],
+                    "detection_score": float(det['scores'][i]),
+                    "attribute_name": 'None',
+            }
+            annos.append(nusc_anno)
+        nusc_annos["results"].update({name: annos})
+
+    nusc_annos["meta"] = {
+            "use_camera": False,
+            "use_lidar": True,
+            "use_radar": False,
+            "use_map": False,
+            "use_external": False,
+        }
+
+    # with open(os.path.join("prediction.pkl"), "wb") as f:
+    #     pickle.dump(pred, f)
+
+    with open('prediction.json', "w") as f:
+            json.dump(nusc_annos, f)
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser(description="CenterPoint")
@@ -148,6 +195,8 @@ if __name__ == '__main__':
     visual_dicts = []
     pred_dicts = {}
     counter = 0 
+    predictions = {}
+    os.makedirs('demo',exist_ok=True)
     for frame_name in tqdm(sorted(os.listdir(args.input_data_dir))):
         if counter == args.num_frame:
             break
@@ -155,11 +204,13 @@ if __name__ == '__main__':
             counter += 1 
 
         pc_name = os.path.join(args.input_data_dir, frame_name)
+
         points = load_points_stitch(pc_name)
         bev_map = nuscene_vis(points)
 
         detections = process_example(points, args.fp16)
-
+        predictions.update({frame_name: detections})
         pred_boxes = detections['boxes'][:, [0, 1, 2, 3, 4, 5, -1]]
         bev_map = nuscene_vis(points, pred_boxes)
-        cv2.imwrite('./test_%02d.png' % counter, bev_map)
+        cv2.imwrite('./demo/test_%02d.png' % counter, bev_map)
+    save_pred(predictions)

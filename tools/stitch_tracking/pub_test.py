@@ -10,16 +10,20 @@ import time
 import copy
 import argparse
 import copy
-import json
 import os
-import numpy as np
 from pub_tracker import PubTracker as Tracker
 from nuscenes import NuScenes
-import json 
 import time
 from nuscenes.utils import splits
 from det3d.datasets.stitch import stitch_splits
-
+import string, random
+STITCH_TRACKING_NAMES = [
+    'car',
+    'truck',
+    'bus',
+    'motorcycle',
+    'pedestrian',
+]
 def parse_args():
     parser = argparse.ArgumentParser(description="Tracking Evaluation")
     parser.add_argument("--work_dir", help="the dir to save logs and tracking results")
@@ -28,7 +32,7 @@ def parse_args():
     )
     parser.add_argument("--hungarian", action='store_true')
     parser.add_argument("--root", type=str, default="data/stitch")
-    parser.add_argument("--version", type=str, default='v0.3-stitch')
+    parser.add_argument("--version", type=str, default='v0.4-stitch')
     parser.add_argument("--max_age", type=int, default=3)
 
     args = parser.parse_args()
@@ -36,36 +40,22 @@ def parse_args():
     return args
 
 
-def save_first_frame():
+def save_first_frame(predictions):
     args = parse_args()
-    nusc = NuScenes(version=args.version, dataroot=args.root, verbose=True)
-    if args.version == 'v0.3-stitch':
-        scenes = stitch_splits.val
-    elif args.version == 'v1.0-test':
-        scenes = splits.test 
-    else:
-        raise ValueError("unknown")
-
     frames = []
-    for sample in nusc.sample:
-        scene_name = nusc.get("scene", sample['scene_token'])['name'] 
-        if scene_name not in scenes:
-            continue 
+    for i, sample in enumerate(predictions):
 
-        timestamp = sample["timestamp"] * 1e-6
-        token = sample["token"]
+        timestamp = 0
+        token = sample
         frame = {}
         frame['token'] = token
-        frame['timestamp'] = timestamp 
-
-        # start of a sequence
-        if sample['prev'] == '':
+        frame['timestamp'] = i 
+        if i == 0:
             frame['first'] = True 
         else:
-            frame['first'] = False 
+            frame['first'] = False
         frames.append(frame)
 
-    del nusc
 
     res_dir = os.path.join(args.work_dir)
     if not os.path.exists(res_dir):
@@ -80,18 +70,19 @@ def main():
     print('Deploy OK')
 
     tracker = Tracker(max_age=args.max_age, hungarian=args.hungarian)
+
     with open(args.checkpoint, 'rb') as f:
         predictions=json.load(f)['results']
-
+    save_first_frame(predictions) # save first frame info in track/frames_meta.json
     with open(os.path.join(args.work_dir, 'frames_meta.json'), 'rb') as f:
         frames=json.load(f)['frames']
-    # import pdb; pdb.set_trace()
+
     nusc_annos = {
         "results": {},
         "meta": None,
     }
+    scene_token = "iechhs0fjtjw7ttioqi5skr7ipuuekqv" # arbitrary scene token using in prediction part
     size = len(frames)
-
     print("Begin Tracking\n")
     start = time.time()
     for i in range(size):
@@ -104,30 +95,31 @@ def main():
             tracker.reset()
             last_time_stamp = frames[i]['timestamp']
 
-        # import pdb; pdb.set_trace()
         time_lag = (frames[i]['timestamp'] - last_time_stamp) 
         last_time_stamp = frames[i]['timestamp']
-        # import pdb; pdb.set_trace()
 
         preds = predictions[token]
-
+        
         outputs = tracker.step_centertrack(preds, time_lag)
-        # import pdb; pdb.set_trace()
         annos = []
-
         for item in outputs:
             if item['active'] == 0:
                 continue 
-            # import pdb; pdb.set_trace()
             nusc_anno = {
                 "sample_token": token,
                 "translation": item['translation'],
                 "size": item['size'],
                 "rotation": item['rotation'],
-                "velocity": item['velocity'],
                 "tracking_id": str(item['tracking_id']),
-                "tracking_name": item['detection_name'],
                 "tracking_score": item['detection_score'],
+                "tracking_name": item['detection_name'],
+                "gt_box_loc": item['translation'],
+                "gt_box_size": item['size'],
+                "gt_box_rot": item['rotation'],
+                "gt_class": item['detection_name'],
+                "timestamp": int(token.split(".")[0]),
+                "scene_token": scene_token,
+                "velocity": item['velocity']
             }
             annos.append(nusc_anno)
         nusc_annos["results"].update({token: annos})
@@ -192,7 +184,6 @@ def test_time():
     print("Speed is {} FPS".format( max(speeds)  ))
 
 if __name__ == '__main__':
-    save_first_frame()
     main()
     # test_time()
-    eval_tracking()
+    # eval_tracking()
