@@ -9,6 +9,10 @@ aa/
 tracking_json/
 val/
 DEMO/
+pred_png/
+stitching_dir/
+stitching_prediction/
+final_track_results/
 
 *.pth
 *.npy
