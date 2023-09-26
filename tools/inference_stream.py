@@ -608,6 +608,9 @@ if __name__ == '__main__':
     end_frame = int(args.end_frame)
     input_data_list = []
 
+    global vis_cnt
+    vis_cnt = start_frame
+
     ## Select Frames
     for selected_frame in sorted(os.listdir(args.input_data_dir)):
       frame_num = int(selected_frame.split('.')[0])
