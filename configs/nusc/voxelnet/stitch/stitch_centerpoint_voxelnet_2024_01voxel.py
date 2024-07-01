@@ -85,7 +85,7 @@ test_cfg = dict(
         nms_iou_threshold=0.001,
     ),
     score_threshold=0.1,
-    pc_range=[208413.9, 534700.9],
+    pc_range=[-6.4, -16.5],
     out_size_factor=get_downsample_factor(model),
     voxel_size=[0.1, 0.1]
 )

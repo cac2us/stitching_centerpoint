@@ -261,7 +261,7 @@ class CenterHead(nn.Module):
 
             target_box = example['anno_box'][task_id]
             # reconstruct the anno_box from multiple reg heads
-            if self.dataset in ['waymo', 'nuscenes', 'stitch']:
+            if self.dataset in ['waymo', 'nuscenes', 'stitch_dataset']:
                 if 'vel' in preds_dict:
                     preds_dict['anno_box'] = torch.cat((preds_dict['reg'], preds_dict['height'], preds_dict['dim'],
                                                         preds_dict['vel'], preds_dict['rot']), dim=1)  

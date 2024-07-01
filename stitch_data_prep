@@ -1,0 +1,40 @@
+[1mNAME[0m
+    create_data.py
+
+[1mSYNOPSIS[0m
+    create_data.py [4mGROUP[0m | [4mCOMMAND[0m
+
+[1mGROUPS[0m
+    [1m[4mGROUP[0m[0m is one of the following:
+
+     copy
+       Generic (shallow and deep) copying operations.
+
+     pickle
+       Create portable serialized representations of Python objects.
+
+     fire
+       The Python Fire module.
+
+     os
+       OS routines for NT or Posix depending on what system we're on.
+
+     nu_ds
+
+     st_ds
+
+     waymo_ds
+
+[1mCOMMANDS[0m
+    [1m[4mCOMMAND[0m[0m is one of the following:
+
+     Path
+       PurePath subclass that can make system calls.
+
+     create_groundtruth_database
+
+     stitch_data_prep
+
+     nuscenes_data_prep
+
+     waymo_data_prep
