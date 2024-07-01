@@ -206,13 +206,17 @@ class CenterHead(nn.Module):
         )
 
         # a shared convolution 
+        # self.shared_conv = nn.Sequential(
+        #     nn.Conv2d(in_channels, share_conv_channel,
+        #     kernel_size=3, padding=1, bias=True),
+        #     nn.BatchNorm2d(share_conv_channel),
+        #     nn.ReLU(inplace=True)
+        # )
         self.shared_conv = nn.Sequential(
-            nn.Conv2d(in_channels, share_conv_channel,
-            kernel_size=3, padding=1, bias=True),
+            nn.Conv2d(768, share_conv_channel, kernel_size=3, padding=1, bias=True),
             nn.BatchNorm2d(share_conv_channel),
             nn.ReLU(inplace=True)
         )
-
         self.tasks = nn.ModuleList()
         print("Use HM Bias: ", init_bias)
 

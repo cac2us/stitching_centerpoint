@@ -151,14 +151,18 @@ class SpMiddleResNetFHD(nn.Module):
         )
 
 
+        # self.extra_conv = spconv.SparseSequential(
+        #     SparseConv3d(
+        #         128, 128, (3, 1, 1), (2, 1, 1), bias=False
+        #     ),  # [200, 150, 5] -> [200, 150, 2]
+        #     build_norm_layer(norm_cfg, 128)[1],
+        #     nn.ReLU(),
+        # )
         self.extra_conv = spconv.SparseSequential(
-            SparseConv3d(
-                128, 128, (3, 1, 1), (2, 1, 1), bias=False
-            ),  # [200, 150, 5] -> [200, 150, 2]
-            build_norm_layer(norm_cfg, 128)[1],
+            SparseConv3d(128, 256, (3, 1, 1), (2, 1, 1), padding=(1, 0, 0), bias=False),  # 출력 채널 수 256으로 변경
+            build_norm_layer(norm_cfg, 256)[1],
             nn.ReLU(),
         )
-
     def forward(self, voxel_features, coors, batch_size, input_shape):
 
         # input: # [41, 1600, 1408]
