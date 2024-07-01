@@ -39,7 +39,7 @@ class StitchDataset(PointCloudDataset):
         pipeline=None,
         class_names=None,
         test_mode=False,
-        version="v0.4-stitch",
+        version="v1.0-stitch-trainval",
         load_interval=1,
         **kwargs,
     ):
@@ -79,8 +79,8 @@ class StitchDataset(PointCloudDataset):
 
         with open(self._info_path, "rb") as f:
             _nusc_infos_all = pickle.load(f)
-        test_box = _nusc_infos_all[0]['gt_boxes']
-        np.save("pkl", test_box)
+        # test_box = _nusc_infos_all[0]['gt_boxes']
+        # np.save("pkl", test_box)
         _nusc_infos_all = _nusc_infos_all[::self.load_interval]
 
         if not self.test_mode:  # if training
@@ -199,8 +199,8 @@ class StitchDataset(PointCloudDataset):
             # "v1.0-mini": "mini_val",
             # "v1.0-trainval": "val",
             # "v1.0-test": "test",
-            "v0.5-stitch": "val",
-            "v0.4-stitch": "val"
+            # "v0.5-stitch": "val",
+            "v1.0-stitch-trainval": "val"
         }
         if not testset:
             dets = []
@@ -246,6 +246,7 @@ class StitchDataset(PointCloudDataset):
                         "bus",
                         "truck",
                         "trailer",
+                        "heavy_truck",
                     ]:
                         attr = "vehicle.moving"
                     elif name in ["bicycle", "motorcycle"]:

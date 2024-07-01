@@ -78,8 +78,7 @@ assigner = dict(
 train_cfg = dict(assigner=assigner)
 
 test_cfg = dict(
-    post_center_limit_range = [208413.9, 534700.9, 75.8, 
-                                208495.6, 534776.7, 78.5],
+    post_center_limit_range = [-6.4, -16.5, -5.6, 80.0, 62.7, -1.3],
     nms=dict(
         nms_pre_max_size=1000,
         nms_post_max_size=83,

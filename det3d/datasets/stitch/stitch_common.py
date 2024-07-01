@@ -20,6 +20,7 @@ except:
     print("nuScenes devkit not Found!")
 
 general_to_detection = {
+    "human.pedestrian": "pedestrian",
     "human.pedestrian.adult": "pedestrian",
     "human.pedestrian.child": "pedestrian",
     "human.pedestrian.wheelchair": "ignore",
@@ -31,9 +32,11 @@ general_to_detection = {
     "vehicle.car": "car",
     "vehicle.motorcycle": "motorcycle",
     "vehicle.bicycle": "bicycle",
+    "vehicle.bus": "bus",
     "vehicle.bus.bendy": "bus",
     "vehicle.bus.rigid": "bus",
     "vehicle.truck": "truck",
+    "vehicle.heavy_truck": "heavy_truck",
     "vehicle.construction": "construction_vehicle",
     "vehicle.emergency.ambulance": "ignore",
     "vehicle.emergency.police": "ignore",
@@ -42,7 +45,7 @@ general_to_detection = {
     "movable_object.trafficcone": "traffic_cone",
     "movable_object.pushable_pullable": "ignore",
     "movable_object.debris": "ignore",
-    "static_object.bicycle_rack": "ignore",
+    "static_object.bicycle_rack": "ignore"
 }
 
 cls_attr_dist = {
@@ -86,16 +89,16 @@ cls_attr_dist = {
         "vehicle.parked": 330133,
         "vehicle.stopped": 46898,
     },
-    # "construction_vehicle": {
-    #     "cycle.with_rider": 0,
-    #     "cycle.without_rider": 0,
-    #     "pedestrian.moving": 0,
-    #     "pedestrian.sitting_lying_down": 0,
-    #     "pedestrian.standing": 0,
-    #     "vehicle.moving": 882,
-    #     "vehicle.parked": 11549,
-    #     "vehicle.stopped": 2102,
-    # },
+    "heavy_truck": {
+        "cycle.with_rider": 0,
+        "cycle.without_rider": 0,
+        "pedestrian.moving": 0,
+        "pedestrian.sitting_lying_down": 0,
+        "pedestrian.standing": 0,
+        "vehicle.moving": 882,
+        "vehicle.parked": 11549,
+        "vehicle.stopped": 2102,
+    },
     "ignore": {
         "cycle.with_rider": 307,
         "cycle.without_rider": 73,
@@ -563,9 +566,9 @@ def quaternion_yaw(q: Quaternion) -> float:
     return yaw
 
 
-def create_stitch_infos(root_path, version="v0.4-stitch", nsweeps=1, filter_zero=True):
+def create_stitch_infos(root_path, version="v1.0-stitch-trainval", nsweeps=1, filter_zero=True):
     nusc = NuScenes(version=version, dataroot=root_path, verbose=True)
-    available_vers = ["v1.0-trainval", "v1.0-test", "v1.0-mini", "v0.7-stitch", "v0.4-stitch", "v0.5-stitch", "v0.6-stitch"]
+    available_vers = ["v1.0-trainval", "v1.0-test", "v1.0-mini", "v0.7-stitch", "v1.0-stitch-trainval", "v0.5-stitch", "v0.6-stitch"]
     assert version in available_vers
     if version == "v1.0-trainval":
         train_scenes = splits.train
@@ -576,7 +579,7 @@ def create_stitch_infos(root_path, version="v0.4-stitch", nsweeps=1, filter_zero
     elif version == "v1.0-mini":
         train_scenes = splits.mini_train
         val_scenes = splits.mini_val
-    elif version == "v0.5-stitch" or version == 'v0.7-stitch':
+    elif version == "v1.0-stitch-trainval":
         train_scenes = stitch_splits.train
         val_scenes = stitch_splits.val
     else:
