@@ -23,9 +23,9 @@ general_to_detection = {
     "human.pedestrian": "pedestrian",
     "human.pedestrian.adult": "pedestrian",
     "human.pedestrian.child": "pedestrian",
-    "human.pedestrian.wheelchair": "ignore",
-    "human.pedestrian.stroller": "ignore",
-    "human.pedestrian.personal_mobility": "ignore",
+    # "human.pedestrian.wheelchair": "ignore",
+    # "human.pedestrian.stroller": "ignore",
+    # "human.pedestrian.personal_mobility": "ignore",
     "human.pedestrian.police_officer": "pedestrian",
     "human.pedestrian.construction_worker": "pedestrian",
     "animal": "ignore",
@@ -37,15 +37,15 @@ general_to_detection = {
     "vehicle.bus.rigid": "bus",
     "vehicle.truck": "truck",
     "vehicle.heavy_truck": "heavy_truck",
-    "vehicle.construction": "construction_vehicle",
-    "vehicle.emergency.ambulance": "ignore",
-    "vehicle.emergency.police": "ignore",
-    "vehicle.trailer": "trailer",
-    "movable_object.barrier": "barrier",
-    "movable_object.trafficcone": "traffic_cone",
-    "movable_object.pushable_pullable": "ignore",
-    "movable_object.debris": "ignore",
-    "static_object.bicycle_rack": "ignore"
+    # "vehicle.construction": "construction_vehicle",
+    # "vehicle.emergency.ambulance": "ignore",
+    # "vehicle.emergency.police": "ignore",
+    # "vehicle.trailer": "trailer",
+    # "movable_object.barrier": "barrier",
+    # "movable_object.trafficcone": "traffic_cone",
+    # "movable_object.pushable_pullable": "ignore",
+    # "movable_object.debris": "ignore",
+    # "static_object.bicycle_rack": "ignore"
 }
 
 cls_attr_dist = {
@@ -522,10 +522,10 @@ def _fill_trainval_infos(nusc, train_scenes, val_scenes, test=False, nsweeps=1, 
             names = np.array([b.name for b in ref_boxes])
             tokens = np.array([b.token for b in ref_boxes])
             ### stitch rotation
-            gt_boxes = np.concatenate(
-                [locs, dims, velocity[:, :2], -rots - np.pi / 2], axis=1
-            )
-            # gt_boxes = np.concatenate([locs, dims, rots], axis=1)
+            # gt_boxes = np.concatenate(
+            #     [locs, dims, velocity[:, :2], -rots - np.pi / 2], axis=1
+            # )
+            gt_boxes = np.concatenate([locs, dims, rots], axis=1)
 
             assert len(annotations) == len(gt_boxes) == len(velocity)
 
@@ -640,4 +640,6 @@ def eval_main(nusc, eval_version, res_path, eval_set, output_dir):
         output_dir=output_dir,
         verbose=True,
     )
+    
+
     metrics_summary = nusc_eval.main(plot_examples=10,)

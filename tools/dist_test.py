@@ -119,7 +119,7 @@ def main():
         dist=distributed,
         shuffle=False,
     )
-
+    
     checkpoint = load_checkpoint(model, args.checkpoint, map_location="cpu")
 
     # put model on gpus
@@ -153,20 +153,21 @@ def main():
 
     time_start = 0 
     time_end = 0 
-
+    time_list = []
     for i, data_batch in enumerate(data_loader):
         if i == start:
-            torch.cuda.synchronize()
+            # torch.cuda.synchronize()
             time_start = time.time()
-
-        if i == end:
-            torch.cuda.synchronize()
+        startt = time.time()
+        if i == end:            
+            # torch.cuda.synchronize()
             time_end = time.time()
 
         with torch.no_grad():
             outputs = batch_processor(
                 model, data_batch, train_mode=False, local_rank=args.local_rank,
             )
+        
         for output in outputs:
             token = output["metadata"]["token"]
             for k, v in output.items():
@@ -179,6 +180,10 @@ def main():
             )
             if args.local_rank == 0:
                 prog_bar.update()
+        # print("\n")
+        time_list.append(time.time() - startt)
+    print(np.mean(time_list))
+        
 
     synchronize()
 

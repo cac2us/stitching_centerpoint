@@ -1,0 +1,50 @@
+2024-07-03 09:21:21,565 - INFO - Start running, host: root@fdd4a3fd0b8f, work_dir: /mnt/stitching_centerpoint/work_dir/test
+2024-07-03 09:21:21,565 - INFO - workflow: [('train', 1)], max: 1 epochs
+2024-07-03 09:21:43,424 - INFO - Epoch [1/1][5/3234]	lr: 0.00010, eta: 3:55:15, time: 4.371, data_time: 0.984, transfer_time: 0.004, forward_time: 0.335, loss_parse_time: 0.000 memory: 5118, 
+2024-07-03 09:21:43,424 - INFO - task : ['car'], loss: inf, hm_loss: 13.7213, loc_loss: inf, loc_loss_elem: ['4.5610', '2.6369', '5.4547', '2.0771', '2.6783', '2.0820', 'inf', 'inf', '2.8830', '2.1277'], num_positive: 25.6000
+2024-07-03 09:21:43,425 - INFO - task : ['truck'], loss: inf, hm_loss: 19.3279, loc_loss: inf, loc_loss_elem: ['2.3275', '4.7443', '10.3632', '3.8265', '2.1769', '2.2053', 'inf', 'inf', '2.4118', '4.7037'], num_positive: 9.6000
+2024-07-03 09:21:43,425 - INFO - task : ['heavy_truck'], loss: inf, hm_loss: 9.9878, loc_loss: inf, loc_loss_elem: ['2.6502', '1.7063', '3.3589', '1.9277', '1.3090', '1.4550', 'inf', 'inf', '1.8630', '1.7060'], num_positive: 9.8000
+2024-07-03 09:21:43,425 - INFO - task : ['bus'], loss: inf, hm_loss: 42.1213, loc_loss: inf, loc_loss_elem: ['2.5817', '5.9999', '13.8014', '5.0149', '9.1245', '3.8209', 'inf', 'inf', '10.0281', '11.0606'], num_positive: 3.8000
+2024-07-03 09:21:43,425 - INFO - task : ['motorcycle'], loss: 26024.0292, hm_loss: 107.4417, loc_loss: 103666.3510, loc_loss_elem: ['0.4008', '2.5588', '2.7392', '1.1263', '0.9250', '1.9647', '230370.2028', '287883.0159', '1.2849', '4.7012'], num_positive: 0.8000
+2024-07-03 09:21:43,425 - INFO - task : ['pedestrian'], loss: inf, hm_loss: 14.5960, loc_loss: inf, loc_loss_elem: ['3.7233', '3.7601', '11.5494', '3.1284', '2.0389', '4.6276', 'inf', 'inf', '3.9657', '5.4500'], num_positive: 11.0000
+
+2024-07-03 09:21:50,601 - INFO - Epoch [1/1][10/3234]	lr: 0.00010, eta: 2:36:00, time: 1.435, data_time: 0.631, transfer_time: 0.004, forward_time: 0.217, loss_parse_time: 0.000 memory: 5118, 
+2024-07-03 09:21:50,601 - INFO - task : ['car'], loss: inf, hm_loss: 7.3524, loc_loss: inf, loc_loss_elem: ['0.9518', '1.0796', '3.9090', '1.0259', '1.3036', '0.9130', 'inf', 'inf', '0.9088', '0.8773'], num_positive: 22.4000
+2024-07-03 09:21:50,601 - INFO - task : ['truck'], loss: inf, hm_loss: 20.6242, loc_loss: inf, loc_loss_elem: ['0.8698', '2.0930', '4.7042', '2.5157', '0.5720', '1.9652', 'inf', 'inf', '1.3864', '1.1610'], num_positive: 6.0000
+2024-07-03 09:21:50,601 - INFO - task : ['heavy_truck'], loss: inf, hm_loss: 10.8618, loc_loss: inf, loc_loss_elem: ['1.4794', '1.8184', '2.9566', '1.9496', '1.1269', '1.1352', 'inf', 'inf', '1.4735', '1.4667'], num_positive: 7.0000
+2024-07-03 09:21:50,601 - INFO - task : ['bus'], loss: inf, hm_loss: 11.5314, loc_loss: inf, loc_loss_elem: ['2.9398', '2.4350', '10.5467', '3.7375', '4.1918', '3.3308', 'inf', 'inf', '3.8102', '2.8769'], num_positive: 8.4000
+2024-07-03 09:21:50,601 - INFO - task : ['motorcycle'], loss: inf, hm_loss: 68.0692, loc_loss: inf, loc_loss_elem: ['0.4797', '0.5004', '2.0515', '0.6026', '0.4463', '0.1615', 'inf', 'inf', '0.9064', '1.2857'], num_positive: 0.6000
+2024-07-03 09:21:50,601 - INFO - task : ['pedestrian'], loss: inf, hm_loss: 60.9715, loc_loss: inf, loc_loss_elem: ['1.2454', '1.9712', '3.5649', '1.3165', '1.7674', '1.4663', 'inf', 'inf', '2.1103', '1.9751'], num_positive: 2.6000
+
+2024-07-03 09:21:57,760 - INFO - Epoch [1/1][15/3234]	lr: 0.00010, eta: 2:09:27, time: 1.432, data_time: 0.616, transfer_time: 0.004, forward_time: 0.220, loss_parse_time: 0.000 memory: 5123, 
+2024-07-03 09:21:57,760 - INFO - task : ['car'], loss: inf, hm_loss: 6.3480, loc_loss: inf, loc_loss_elem: ['0.7008', '0.7290', '3.1231', '0.8149', '0.8184', '0.7425', 'inf', 'inf', '0.9173', '0.8187'], num_positive: 23.8000
+2024-07-03 09:21:57,760 - INFO - task : ['truck'], loss: inf, hm_loss: 12.6625, loc_loss: inf, loc_loss_elem: ['2.2712', '2.6394', '5.6197', '2.8322', '0.7549', '2.3118', 'inf', 'inf', '1.3345', '1.2507'], num_positive: 7.8000
+2024-07-03 09:21:57,761 - INFO - task : ['heavy_truck'], loss: inf, hm_loss: 8.7374, loc_loss: inf, loc_loss_elem: ['1.7095', '0.8202', '1.7193', '2.2807', '1.1222', '1.3576', 'inf', 'inf', '1.3993', '1.5386'], num_positive: 7.2000
+2024-07-03 09:21:57,761 - INFO - task : ['bus'], loss: inf, hm_loss: 23.8682, loc_loss: inf, loc_loss_elem: ['1.2908', '1.3401', '4.6528', '2.4475', '2.1439', '2.5395', 'inf', 'inf', '1.4077', '1.7634'], num_positive: 4.2000
+2024-07-03 09:21:57,761 - INFO - task : ['motorcycle'], loss: inf, hm_loss: 38.3251, loc_loss: inf, loc_loss_elem: ['0.3684', '0.7792', '0.9875', '0.1635', '0.4383', '0.3557', 'inf', 'inf', '0.4067', '0.4638'], num_positive: 0.8000
+2024-07-03 09:21:57,761 - INFO - task : ['pedestrian'], loss: inf, hm_loss: 14.9489, loc_loss: inf, loc_loss_elem: ['2.4314', '5.1940', '7.0609', '2.9696', '3.2535', '2.8143', 'inf', 'inf', '3.8720', '3.1197'], num_positive: 6.2000
+
+2024-07-03 09:22:05,152 - INFO - Epoch [1/1][20/3234]	lr: 0.00010, eta: 1:56:44, time: 1.478, data_time: 0.623, transfer_time: 0.004, forward_time: 0.231, loss_parse_time: 0.000 memory: 5123, 
+2024-07-03 09:22:05,152 - INFO - task : ['car'], loss: inf, hm_loss: 5.3633, loc_loss: inf, loc_loss_elem: ['1.0619', '0.8633', '2.8452', '1.0519', '0.6877', '1.1456', 'inf', 'inf', '1.4295', '0.9656'], num_positive: 26.6000
+2024-07-03 09:22:05,152 - INFO - task : ['truck'], loss: inf, hm_loss: 7.5030, loc_loss: inf, loc_loss_elem: ['1.2975', '1.8681', '3.9529', '1.7469', '0.9836', '1.4926', 'inf', 'inf', '1.0769', '1.4539'], num_positive: 9.0000
+2024-07-03 09:22:05,152 - INFO - task : ['heavy_truck'], loss: inf, hm_loss: 5.6902, loc_loss: inf, loc_loss_elem: ['1.4801', '0.6065', '1.3977', '1.9181', '0.8992', '0.9095', 'inf', 'inf', '1.1927', '1.3676'], num_positive: 8.6000
+2024-07-03 09:22:05,152 - INFO - task : ['bus'], loss: inf, hm_loss: 15.3191, loc_loss: inf, loc_loss_elem: ['1.0972', '1.4894', '4.7035', '2.1012', '3.0245', '2.0218', 'inf', 'inf', '2.2329', '1.8895'], num_positive: 4.8000
+2024-07-03 09:22:05,152 - INFO - task : ['motorcycle'], loss: inf, hm_loss: 25.3517, loc_loss: inf, loc_loss_elem: ['0.4273', '1.1934', '1.1859', '0.2514', '0.4037', '0.7646', 'inf', 'inf', '0.2298', '1.2436'], num_positive: 1.6000
+2024-07-03 09:22:05,152 - INFO - task : ['pedestrian'], loss: inf, hm_loss: 10.1792, loc_loss: inf, loc_loss_elem: ['1.2562', '2.3642', '6.1394', '1.2328', '1.3314', '1.8057', 'inf', 'inf', '2.0177', '2.4474'], num_positive: 8.2000
+
+2024-07-03 09:22:12,448 - INFO - Epoch [1/1][25/3234]	lr: 0.00010, eta: 1:48:51, time: 1.459, data_time: 0.640, transfer_time: 0.004, forward_time: 0.223, loss_parse_time: 0.000 memory: 5128, 
+2024-07-03 09:22:12,449 - INFO - task : ['car'], loss: inf, hm_loss: 5.0721, loc_loss: inf, loc_loss_elem: ['0.7712', '0.8461', '1.4485', '0.8546', '0.4349', '0.7482', 'inf', 'inf', '1.3479', '0.6621'], num_positive: 22.6000
+2024-07-03 09:22:12,449 - INFO - task : ['truck'], loss: inf, hm_loss: 6.5694, loc_loss: inf, loc_loss_elem: ['1.0535', '1.3377', '2.8867', '1.2264', '0.4863', '1.1810', 'inf', 'inf', '0.5009', '1.0428'], num_positive: 7.4000
+2024-07-03 09:22:12,449 - INFO - task : ['heavy_truck'], loss: inf, hm_loss: 3.8417, loc_loss: inf, loc_loss_elem: ['0.8810', '0.6481', '1.0088', '2.0454', '0.7274', '0.9592', 'inf', 'inf', '0.8872', '0.9912'], num_positive: 10.8000
+2024-07-03 09:22:12,449 - INFO - task : ['bus'], loss: inf, hm_loss: 12.7495, loc_loss: inf, loc_loss_elem: ['0.5185', '0.6603', '0.9035', '1.7243', '0.6748', '2.1731', 'inf', 'inf', '1.6612', '0.4680'], num_positive: 3.2000
+2024-07-03 09:22:12,449 - INFO - task : ['motorcycle'], loss: inf, hm_loss: 17.2053, loc_loss: inf, loc_loss_elem: ['0.2160', '0.5293', '0.8029', '0.5556', '0.1643', '0.3991', 'inf', 'inf', '0.1642', '0.4997'], num_positive: 0.8000
+2024-07-03 09:22:12,449 - INFO - task : ['pedestrian'], loss: inf, hm_loss: 7.9505, loc_loss: inf, loc_loss_elem: ['1.2466', '1.4849', '4.1506', '1.7004', '0.9052', '1.5990', 'inf', 'inf', '1.8736', '2.6022'], num_positive: 12.8000
+
+2024-07-03 09:22:19,785 - INFO - Epoch [1/1][30/3234]	lr: 0.00010, eta: 1:43:37, time: 1.467, data_time: 0.651, transfer_time: 0.004, forward_time: 0.220, loss_parse_time: 0.000 memory: 5128, 
+2024-07-03 09:22:19,785 - INFO - task : ['car'], loss: inf, hm_loss: 3.7373, loc_loss: inf, loc_loss_elem: ['0.6931', '0.8324', '1.1647', '0.6284', '0.4396', '0.5322', 'inf', 'inf', '0.7455', '0.7142'], num_positive: 24.4000
+2024-07-03 09:22:19,785 - INFO - task : ['truck'], loss: inf, hm_loss: 4.3645, loc_loss: inf, loc_loss_elem: ['0.7190', '1.5181', '2.6580', '0.8825', '0.6478', '0.6538', 'inf', 'inf', '1.1390', '1.5621'], num_positive: 9.6000
+2024-07-03 09:22:19,785 - INFO - task : ['heavy_truck'], loss: inf, hm_loss: 4.8521, loc_loss: inf, loc_loss_elem: ['0.5704', '0.4699', '0.7406', '0.9621', '0.6914', '0.4347', 'inf', 'inf', '0.5774', '0.6983'], num_positive: 5.2000
+2024-07-03 09:22:19,785 - INFO - task : ['bus'], loss: inf, hm_loss: 11.7409, loc_loss: inf, loc_loss_elem: ['0.4751', '1.1516', '1.8621', '1.8276', '0.8937', '2.4780', 'inf', 'inf', '1.8403', '2.3777'], num_positive: 3.4000
+2024-07-03 09:22:19,785 - INFO - task : ['motorcycle'], loss: 5387.2001, hm_loss: 13.7568, loc_loss: 21493.7731, loc_loss_elem: ['0.4082', '0.3894', '0.3905', '0.6384', '0.2977', '0.4489', '55909.7593', '51539.6159', '0.7366', '0.5881'], num_positive: 1.0000
+2024-07-03 09:22:19,785 - INFO - task : ['pedestrian'], loss: inf, hm_loss: 8.7563, loc_loss: inf, loc_loss_elem: ['0.6284', '1.0196', '3.6394', '1.1082', '0.9862', '1.0505', 'inf', 'inf', '1.1699', '1.3923'], num_positive: 5.2000
+

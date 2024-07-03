@@ -1,0 +1,10 @@
+2024-07-01 10:07:50,983 - INFO - Start running, host: root@fdd4a3fd0b8f, work_dir: /mnt/stitching_centerpoint/work_dir/test
+2024-07-01 10:07:50,983 - INFO - workflow: [('train', 1)], max: 1 epochs
+2024-07-01 10:08:35,831 - INFO - Epoch [1/1][5/12936]	lr: 0.00010, eta: 1 day, 8:13:00, time: 8.969, data_time: 8.311, transfer_time: 0.001, forward_time: 0.104, loss_parse_time: 0.000 memory: 1774, 
+2024-07-01 10:08:35,831 - INFO - task : ['car'], loss: inf, hm_loss: 7.7945, loc_loss: inf, loc_loss_elem: ['2.0872', '2.1894', '3.1478', '2.2920', '1.7904', '1.6780', 'inf', 'inf', '4.0793', '1.5838'], num_positive: 6.0000
+2024-07-01 10:08:35,831 - INFO - task : ['truck'], loss: inf, hm_loss: 23.3398, loc_loss: inf, loc_loss_elem: ['2.4482', '2.2575', '7.0321', '5.7967', '3.7608', '5.5976', 'inf', 'inf', '13.8440', '5.7484'], num_positive: 2.6000
+2024-07-01 10:08:35,831 - INFO - task : ['heavy_truck'], loss: inf, hm_loss: 57.0692, loc_loss: inf, loc_loss_elem: ['1.7915', '2.6409', '2.9626', '1.7391', '1.6596', '1.8016', 'inf', 'inf', '1.5659', '1.5329'], num_positive: 2.6000
+2024-07-01 10:08:35,831 - INFO - task : ['bus'], loss: inf, hm_loss: 39.0843, loc_loss: inf, loc_loss_elem: ['1.2527', '2.0225', '3.6422', '2.5766', '0.9922', '1.5559', 'inf', 'inf', '0.9051', '0.9169'], num_positive: 1.4000
+2024-07-01 10:08:35,831 - INFO - task : ['motorcycle'], loss: 23.1380, hm_loss: 23.1380, loc_loss: 0.0000, loc_loss_elem: ['0.0000', '0.0000', '0.0000', '0.0000', '0.0000', '0.0000', '0.0000', '0.0000', '0.0000', '0.0000'], num_positive: 0.0000
+2024-07-01 10:08:35,831 - INFO - task : ['pedestrian'], loss: 5920.5686, hm_loss: 26.1856, loc_loss: 23577.5324, loc_loss_elem: ['2.1219', '4.3971', '4.2433', '2.5598', '7.1132', '2.2660', '56892.6375', '60823.8000', '4.2990', '7.2445'], num_positive: 1.2000
+

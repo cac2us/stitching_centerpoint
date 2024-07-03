@@ -21,24 +21,24 @@ target_assigner = dict(
 )
 
 # model settings
-# model settings
 model = dict(
     type="PointPillars",
     pretrained=None,
     reader=dict(
         type="PillarFeatureNet",
         num_filters=[64, 64],
-        num_input_features=5,
+        num_input_features=3,
         with_distance=False,
         voxel_size=(0.2, 0.2, 8),
-        pc_range=(-51.2, -51.2, -5.0, 51.2, 51.2, 3.0),
+        pc_range=(-6.4, -16.5, -5.6, 80.0, 62.7, -1.3),
     ),
     backbone=dict(type="PointPillarsScatter", ds_factor=1),
     neck=dict(
         type="RPN",
         layer_nums=[3, 5, 5],
         ds_layer_strides=[2, 2, 2],
-        ds_num_filters=[64, 128, 256],
+        # ds_num_filters=[64, 128, 256],
+        ds_num_filters=[128, 256, 384],
         us_layer_strides=[0.5, 1, 2],
         us_num_filters=[128, 128, 128],
         num_input_features=64,
@@ -165,7 +165,7 @@ test_anno = None
 
 data = dict(
     samples_per_gpu=1,
-    workers_per_gpu=4,
+    workers_per_gpu=0,
     # workers_per_gpu=4,
     train=dict(
         type=dataset_type,

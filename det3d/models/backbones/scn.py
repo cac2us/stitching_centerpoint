@@ -114,6 +114,11 @@ class SpMiddleResNetFHD(nn.Module):
             build_norm_layer(norm_cfg, 16)[1],
             nn.ReLU(inplace=True)
         )
+        # self.conv_input = spconv.SparseSequential(
+        #     SubMConv3d(num_input_features, 16, 3, padding=1, bias=False, indice_key="res0"),  # 패딩 1 추가
+        #     build_norm_layer(norm_cfg, 16)[1],
+        #     nn.ReLU(inplace=True)
+        # )
 
         self.conv1 = spconv.SparseSequential(        
             SparseBasicBlock(16, 16, norm_cfg=norm_cfg, indice_key="res0"),
@@ -150,19 +155,24 @@ class SpMiddleResNetFHD(nn.Module):
             SparseBasicBlock(128, 128, norm_cfg=norm_cfg, indice_key="res3"),
         )
 
-
-        # self.extra_conv = spconv.SparseSequential(
-        #     SparseConv3d(
-        #         128, 128, (3, 1, 1), (2, 1, 1), bias=False
-        #     ),  # [200, 150, 5] -> [200, 150, 2]
-        #     build_norm_layer(norm_cfg, 128)[1],
-        #     nn.ReLU(),
-        # )
+        ## original
         self.extra_conv = spconv.SparseSequential(
-            SparseConv3d(128, 256, (3, 1, 1), (2, 1, 1), padding=(1, 0, 0), bias=False),  # 출력 채널 수 256으로 변경
-            build_norm_layer(norm_cfg, 256)[1],
+            SparseConv3d(
+                128, 128, (3, 1, 1), (2, 1, 1), bias=False
+            ),  # [200, 150, 5] -> [200, 150, 2]
+            build_norm_layer(norm_cfg, 128)[1],
             nn.ReLU(),
         )
+
+        # self.extra_conv = spconv.SparseSequential(
+        #     SparseConv3d(128, 256, (3, 1, 1), (2, 1, 1), padding=(1, 0, 0), bias=False),  # 출력 채널 수 256으로 변경
+        #     build_norm_layer(norm_cfg, 256)[1],
+        #     nn.ReLU(),
+        # )
+
+
+
+
     def forward(self, voxel_features, coors, batch_size, input_shape):
 
         # input: # [41, 1600, 1408]
@@ -171,19 +181,39 @@ class SpMiddleResNetFHD(nn.Module):
         coors = coors.int()
         ret = spconv.SparseConvTensor(voxel_features, coors, sparse_shape, batch_size)
         ret._features = ret._features.to(torch.float32)
-        x = self.conv_input(ret)
+        try:
+            # [23, 1056, 1152]
 
-        x_conv1 = self.conv1(x)
-        x_conv2 = self.conv2(x_conv1)
-        x_conv3 = self.conv3(x_conv2)
-        x_conv4 = self.conv4(x_conv3)
+            # import pdb; pdb.set_trace()
+            # print('1', ret.__dict__)
+            # [23, 1056, 1152]
+            x = self.conv_input(ret)
+            # print('2', x.__dict__)
+            # [23, 1056, 1152]
+            x_conv1 = self.conv1(x)
+            # print('3',x_conv1.__dict__)
+            # [23, 1056, 1152]
+            x_conv2 = self.conv2(x_conv1)
+            # print('4',x_conv2.__dict__)
+            # [12, 528, 576]
+            x_conv3 = self.conv3(x_conv2)
+            # print('5',x_conv3.__dict__)
+            # [6, 264, 288]
+            x_conv4 = self.conv4(x_conv3)
+            # print('6',x_conv4.__dict__)
+            # [2, 132, 144]
+            # ret = self.extra_conv(x_conv4)
+            # print('7',ret.__dict__)
+            # [1, 132, 144]
+            
 
-        ret = self.extra_conv(x_conv4)
+            ret = x_conv4.dense()
+            # ret = ret.dense()
 
-        ret = ret.dense()
-
-        N, C, D, H, W = ret.shape
-        ret = ret.view(N, C * D, H, W)
+            N, C, D, H, W = ret.shape
+            ret = ret.view(N, C * D, H, W)
+        except:
+            import pdb; pdb.set_trace()
 
         multi_scale_voxel_features = {
             'conv1': x_conv1,

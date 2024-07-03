@@ -1,0 +1,2 @@
+2024-07-01 10:09:11,299 - INFO - Start running, host: root@fdd4a3fd0b8f, work_dir: /mnt/stitching_centerpoint/work_dir/test
+2024-07-01 10:09:11,299 - INFO - workflow: [('train', 1)], max: 1 epochs

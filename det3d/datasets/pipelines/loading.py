@@ -38,14 +38,14 @@ def read_file(path, tries=2, num_point_feature=4, virtual=False):
         points = np.concatenate([points, virtual_points1, virtual_points2], axis=0).astype(np.float32)
     else:
         points_pre = np.fromfile(path, dtype=np.float32)
-        while len(points_pre) < 192000:
-            points_pre = np.append(points_pre, np.array([0]))
-            if len(points_pre) == 192000:
-                break
-        while len(points_pre) > 192000:
-            points_pre = np.delete(points_pre, 0)
-            if len(points_pre) == 192000:
-                break
+        # while len(points_pre) < 192000:
+        #     points_pre = np.append(points_pre, np.array([0]))
+        #     if len(points_pre) == 192000:
+        #         break
+        # while len(points_pre) > 192000:
+        #     points_pre = np.delete(points_pre, 0)
+        #     if len(points_pre) == 192000:
+        #         break
         points = points_pre.reshape(-1, 3)
                         
     return points

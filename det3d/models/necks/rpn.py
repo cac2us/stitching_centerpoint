@@ -154,6 +154,16 @@ class RPN(nn.Module):
             if i - self._upsample_start_idx >= 0:
                 ups.append(self.deblocks[i - self._upsample_start_idx](x))
         if len(ups) > 0:
+            # import pdb; pdb.set_trace()
+            ## voxel01
+            # min_height = min([u.shape[2] for u in ups])
+            # min_width = min([u.shape[3] for u in ups])
+
+            # # Resize all feature maps to the smallest height and width
+            # for i in range(len(ups)):
+            #     if ups[i].shape[2] != min_height or ups[i].shape[3] != min_width:
+            #         ups[i] = F.interpolate(ups[i], size=(min_height, min_width), mode='bilinear', align_corners=False)
+
             x = torch.cat(ups, dim=1)
 
         return x

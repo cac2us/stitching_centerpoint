@@ -38,8 +38,10 @@ class PFNLayer(nn.Module):
         self.norm = build_norm_layer(self.norm_cfg, self.units)[1]
 
     def forward(self, inputs):
-
-        x = self.linear(inputs)
+        try:
+            x = self.linear(inputs)
+        except:
+            import pdb; pdb.set_trace()
         torch.backends.cudnn.enabled = False
         x = self.norm(x.permute(0, 2, 1).contiguous()).permute(0, 2, 1).contiguous()
         torch.backends.cudnn.enabled = True

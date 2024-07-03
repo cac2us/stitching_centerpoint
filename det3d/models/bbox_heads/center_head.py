@@ -205,18 +205,22 @@ class CenterHead(nn.Module):
             f"num_classes: {num_classes}"
         )
 
-        # a shared convolution 
-        # self.shared_conv = nn.Sequential(
-        #     nn.Conv2d(in_channels, share_conv_channel,
-        #     kernel_size=3, padding=1, bias=True),
-        #     nn.BatchNorm2d(share_conv_channel),
-        #     nn.ReLU(inplace=True)
-        # )
+        # a shared convolution
+        # print('chan:', in_channels)
         self.shared_conv = nn.Sequential(
-            nn.Conv2d(768, share_conv_channel, kernel_size=3, padding=1, bias=True),
+            nn.Conv2d(in_channels, share_conv_channel,
+            kernel_size=3, padding=1, bias=True),
             nn.BatchNorm2d(share_conv_channel),
             nn.ReLU(inplace=True)
         )
+        # 예시로 bbox_head에서 shared_conv 레이어를 정의하는 부분
+        # self.shared_conv = nn.Sequential(
+        #     nn.Conv2d(768, share_conv_channel, kernel_size=3, padding=1, bias=True),
+        #     nn.BatchNorm2d(share_conv_channel),
+        #     nn.ReLU(inplace=True)
+        # )
+
+
         self.tasks = nn.ModuleList()
         print("Use HM Bias: ", init_bias)
 
@@ -261,7 +265,7 @@ class CenterHead(nn.Module):
 
             target_box = example['anno_box'][task_id]
             # reconstruct the anno_box from multiple reg heads
-            if self.dataset in ['waymo', 'nuscenes', 'stitch_dataset']:
+            if self.dataset in ['waymo', 'nuscenes', 'stitch', 'stitch_dataset']:
                 if 'vel' in preds_dict:
                     preds_dict['anno_box'] = torch.cat((preds_dict['reg'], preds_dict['height'], preds_dict['dim'],
                                                         preds_dict['vel'], preds_dict['rot']), dim=1)  

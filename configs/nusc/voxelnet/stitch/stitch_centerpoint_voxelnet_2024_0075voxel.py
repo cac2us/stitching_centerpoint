@@ -32,23 +32,13 @@ model = dict(
         type="SpMiddleResNetFHD", num_input_features=3, ds_factor=8
     ),
     ## original
-    # neck=dict(
-    #     type="RPN",
-    #     layer_nums=[5, 5],
-    #     ds_layer_strides=[1, 2],
-    #     ds_num_filters=[128, 256],
-    #     us_layer_strides=[1, 2],
-    #     us_num_filters=[256, 256],
-    #     num_input_features=256,
-    #     logger=logging.getLogger("RPN"),
-    # ),
     neck=dict(
         type="RPN",
         layer_nums=[5, 5],
         ds_layer_strides=[1, 2],
-        ds_num_filters=[256, 512],
+        ds_num_filters=[128, 256],
         us_layer_strides=[1, 2],
-        us_num_filters=[256, 512],
+        us_num_filters=[256, 256],
         num_input_features=256,
         logger=logging.getLogger("RPN"),
     ),
@@ -85,7 +75,7 @@ test_cfg = dict(
         nms_iou_threshold=0.001,
     ),
     score_threshold=0.1,
-    pc_range=[208413.9, 534700.9],
+    pc_range=[-6.4, -16.5],
     out_size_factor=get_downsample_factor(model),
     voxel_size=[0.075, 0.075]
 )
@@ -145,7 +135,6 @@ val_preprocessor = dict(
 ### y: 77.7 -> 78.0 -> ##79.2 78.3 0.9
 ### z: 4.4
 voxel_generator = dict(
-    # range = [208411.9, 534700.0, 75.4, 208497.3, 534778.0, 79.8],
     range = [-6.4, -16.5, -5.6, 80.0, 62.7, -1.3],
     voxel_size=[0.075, 0.075, 0.2],
     max_points_in_voxel=10,
@@ -174,7 +163,7 @@ val_anno = "data/stitch_dataset/infos_val_01sweeps_withvelo_filter_True.pkl"
 test_anno = None
 
 data = dict(
-    samples_per_gpu=1,
+    samples_per_gpu=4,
     workers_per_gpu=0,
     # workers_per_gpu=4,
     train=dict(
